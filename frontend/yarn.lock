@@ -243,7 +243,7 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
-"@googlemaps/js-api-loader@^1.13.2":
+"@googlemaps/js-api-loader@^1.13.2", "@googlemaps/js-api-loader@^1.13.7":
   version "1.13.7"
   resolved "https://registry.yarnpkg.com/@googlemaps/js-api-loader/-/js-api-loader-1.13.7.tgz#05cd401569efbc4871d797341ee4f913aab9d729"
   integrity sha512-nR37TVS7797p91Eng1NxEVpLeFz5H2TXkJHSBaFEM8wid+ffgBdmwRD2uD7TbcLBmHjRABLPrXPAyXhugx97tA==
