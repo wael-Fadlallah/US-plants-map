@@ -1,0 +1,58 @@
+/**
+ * Responds to the mouse-in event on a map shape (state).
+ *
+ * @param {?google.maps.MapMouseEvent} e
+ */
+
+let censusMin = Number.MAX_VALUE,
+  censusMax = -Number.MAX_VALUE;
+
+export function mouseInToRegion(e, setState) {
+  // set the hover state so the setStyle function can change the border
+  e.feature.setProperty("state", "hover");
+
+  const percent =
+    ((e.feature.getProperty("census_variable") - censusMin) /
+      (censusMax - censusMin)) *
+    100;
+
+  // update the label
+  setState(e.feature.getProperty("NAME"));
+  //   document.getElementById("data-value").textContent = e.feature
+  //     .getProperty("census_variable")
+  //     .toLocaleString();
+  //   document.getElementById("data-box").style.display = "block";
+  //   document.getElementById("data-caret").style.display = "block";
+  //   document.getElementById("data-caret").style.paddingLeft = percent + "%";
+}
+
+/**
+ * Responds to the mouse-out event on a map shape (state).
+ *
+ */
+export function mouseOutOfRegion(e) {
+  // reset the hover state, returning the border to normal
+  e.feature.setProperty("state", "normal");
+}
+
+export function addMarker(map, location, title, image = null) {
+  return new window.google.maps.Marker({
+    position: location,
+    map,
+    title,
+    draggable: true,
+    icon: image,
+  });
+}
+
+export const makeContentBox = (state, plantsNumber, pt) => {
+  return `<div id="content">
+          <div id="siteNotice">
+          </div>
+          <h1 id="firstHeading" class="firstHeading">${state}</h1>
+          <div id="bodyContent">
+          <p> Number of plants : ${plantsNumber} <p>
+          <p> Percentage of plants : ${pt} <p>
+          </div> 
+          </div>`;
+};

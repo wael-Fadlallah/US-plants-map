@@ -2,7 +2,6 @@ const NodeGeocoder = require("node-geocoder");
 const PlantsData = require("./../data/plants.json");
 const plantsAddress = require("./../data/plantsAddress.json");
 const fs = require("fs");
-const path = require("path");
 
 const options = {
   provider: "google",
@@ -74,13 +73,21 @@ const searchAddress = async (req, res) => {
 
 const getPlants = async (req, res) => {
   const plants = [];
+  PlantsData.sort(
+    (a, b) =>
+      b["Generator annual net generation (MWh)"] -
+      a["Generator annual net generation (MWh)"]
+  );
   const n = req.params.number ?? 100;
+
   for (let i = 0; i < n; i++) {
     const plant = PlantsData[i];
-    if (plantsAddress[plant["Plant name"]])
-      plant["location"] = plantsAddress[plant["Plant name"]];
-    else plant["location"] = plantsAddress[plant["Plant state abbreviation"]];
-    plants.push(plant);
+    if (plant["Generator annual net generation (MWh)"]) {
+      if (plantsAddress[plant["Plant name"]])
+        plant["location"] = plantsAddress[plant["Plant name"]];
+      else plant["location"] = plantsAddress[plant["Plant state abbreviation"]];
+      plants.push(plant);
+    }
   }
 
   res.send(plants);
