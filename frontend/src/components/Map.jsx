@@ -44,11 +44,11 @@ function Map({ center, zoom, plants: plantsList, states: statesList }) {
           (plant) => plant["Plant state abbreviation"] === state.key
         );
         const pt = ((plantsNumber.length / plants.length) * 100).toFixed(2);
-        const contentString = makeContentBox(
-          state.state,
-          plantsNumber.length,
-          pt
-        );
+        const contentString = makeContentBox({
+          name: state.state,
+          plantsNumber: plantsNumber.length,
+          pt,
+        });
 
         const marker = addMarker(map, state.location, state.state, beachflag);
         const infowindow = new window.google.maps.InfoWindow({
@@ -69,7 +69,18 @@ function Map({ center, zoom, plants: plantsList, states: statesList }) {
   useEffect(async () => {
     if (map && plants) {
       plants.map((plant) => {
-        addMarker(map, plant.location, plant["Plant name"]);
+        const marker = addMarker(map, plant.location, plant["Plant name"]);
+        const contentString = makeContentBox({ name: plant["Plant name"] });
+        const infowindow = new window.google.maps.InfoWindow({
+          content: contentString,
+        });
+        marker.addListener("click", () => {
+          infowindow.open({
+            anchor: marker,
+            map,
+            shouldFocus: false,
+          });
+        });
       });
     }
   }, [map, plants]);

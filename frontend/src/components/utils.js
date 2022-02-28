@@ -36,23 +36,24 @@ export function mouseOutOfRegion(e) {
 }
 
 export function addMarker(map, location, title, image = null) {
-  return new window.google.maps.Marker({
-    position: location,
-    map,
-    title,
-    draggable: true,
-    icon: image,
-  });
+  if (location)
+    return new window.google.maps.Marker({
+      position: location,
+      map,
+      title,
+      draggable: true,
+      icon: image,
+    });
 }
 
-export const makeContentBox = (state, plantsNumber, pt) => {
+export const makeContentBox = ({ name, plantsNumber, pt = 0 }) => {
   return `<div id="content">
           <div id="siteNotice">
           </div>
-          <h1 id="firstHeading" class="firstHeading">${state}</h1>
+          <h1 id="firstHeading" class="firstHeading">${name}</h1>
           <div id="bodyContent">
-          <p> Number of plants : ${plantsNumber} <p>
-          <p> Percentage of plants : ${pt} <p>
+          ${plantsNumber ? `<p> Number of plants : ${plantsNumber}</p>` : ""}
+          ${pt ? `<p> Percentage of plants : ${pt} <p>` : ""}
           </div> 
           </div>`;
 };

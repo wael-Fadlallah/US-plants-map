@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 3000;
+const port = 8080;
 const GeoCoder = require("./src/services/NodeGeocoder");
 const States = require("./src/services/States");
 var cors = require("cors");
