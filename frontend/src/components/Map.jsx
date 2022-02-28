@@ -7,6 +7,7 @@ import {
   addMarker,
   makeContentBox,
 } from "./utils";
+import beachflag from "./../assets/beachflag.png";
 
 export default function MapWrapper({ plants, states }) {
   return (
@@ -49,12 +50,7 @@ function Map({ center, zoom, plants: plantsList, states: statesList }) {
           pt
         );
 
-        const marker = addMarker(
-          map,
-          state.location,
-          state.state,
-          "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
-        );
+        const marker = addMarker(map, state.location, state.state, beachflag);
         const infowindow = new window.google.maps.InfoWindow({
           content: contentString,
         });
@@ -72,9 +68,9 @@ function Map({ center, zoom, plants: plantsList, states: statesList }) {
   // loop through the plants and add the markers
   useEffect(async () => {
     if (map && plants) {
-      plants.map((plant) =>
-        addMarker(map, plant.location, plant["Plant name"])
-      );
+      plants.map((plant) => {
+        addMarker(map, plant.location, plant["Plant name"]);
+      });
     }
   }, [map, plants]);
 

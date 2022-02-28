@@ -18,13 +18,16 @@ function App() {
   };
   return (
     <div className="flex justify-center items-start">
-      <input
-        type="number"
-        placeholder="plants"
-        className="border-2 border-slate-500 border-solid"
-        defaultValue={n}
-        onChange={handlePlantsNumberChange}
-      />
+      <div>
+        <p className="">Plants number</p>
+        <input
+          type="number"
+          placeholder="plants"
+          className="border-2 border-slate-500 border-solid"
+          defaultValue={n}
+          onChange={handlePlantsNumberChange}
+        />
+      </div>
       <MapWrapper plants={plants} states={states} />
 
       {/* {states} */}
