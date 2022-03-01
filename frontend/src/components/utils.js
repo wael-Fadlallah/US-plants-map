@@ -36,7 +36,7 @@ export function mouseOutOfRegion(e) {
 }
 
 export function addMarker(map, location, title, image = null) {
-  if (location)
+  if (location?.lat && location?.lng)
     return new window.google.maps.Marker({
       position: location,
       map,
@@ -46,7 +46,7 @@ export function addMarker(map, location, title, image = null) {
     });
 }
 
-export const makeContentBox = ({ name, plantsNumber, pt = 0 }) => {
+export const makeContentBox = ({ name, plantsNumber, pt = 0, genNet }) => {
   return `<div id="content">
           <div id="siteNotice">
           </div>
@@ -54,6 +54,7 @@ export const makeContentBox = ({ name, plantsNumber, pt = 0 }) => {
           <div id="bodyContent">
           ${plantsNumber ? `<p> Number of plants : ${plantsNumber}</p>` : ""}
           ${pt ? `<p> Percentage of plants : ${pt} <p>` : ""}
+          ${genNet ? `<p> annual net generation (MWh) : ${genNet} <p>` : ""}
           </div> 
           </div>`;
 };

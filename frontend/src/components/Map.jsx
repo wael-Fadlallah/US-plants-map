@@ -54,14 +54,14 @@ function Map({ center, zoom, plants: plantsList, states: statesList }) {
         const infowindow = new window.google.maps.InfoWindow({
           content: contentString,
         });
-
-        marker.addListener("click", () => {
-          infowindow.open({
-            anchor: marker,
-            map,
-            shouldFocus: false,
+        if (marker)
+          marker.addListener("click", () => {
+            infowindow.open({
+              anchor: marker,
+              map,
+              shouldFocus: false,
+            });
           });
-        });
       });
   }, [states]);
 
@@ -69,18 +69,22 @@ function Map({ center, zoom, plants: plantsList, states: statesList }) {
   useEffect(async () => {
     if (map && plants) {
       plants.map((plant) => {
-        const marker = addMarker(map, plant.location, plant["Plant name"]);
-        const contentString = makeContentBox({ name: plant["Plant name"] });
+        const contentString = makeContentBox({
+          name: plant["Plant name"],
+          genNet: plant["Generator annual net generation (MWh)"],
+        });
         const infowindow = new window.google.maps.InfoWindow({
           content: contentString,
         });
-        marker.addListener("click", () => {
-          infowindow.open({
-            anchor: marker,
-            map,
-            shouldFocus: false,
+        const marker = addMarker(map, plant.location, plant["Plant name"]);
+        if (marker)
+          marker.addListener("click", () => {
+            infowindow.open({
+              anchor: marker,
+              map,
+              shouldFocus: false,
+            });
           });
-        });
       });
     }
   }, [map, plants]);
