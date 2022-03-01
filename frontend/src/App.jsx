@@ -32,8 +32,12 @@ function App() {
           {plants &&
             plants.map((plant) => {
               return (
-                <div className="">
-                  <p> name : {plant["Plant name"]} </p>
+                <div className="border border-gray-300 p-2">
+                  <p>Plant Name: {plant["Plant name"]} </p>
+                  <p>
+                    Annual net generation :
+                    {plant["Generator annual net generation (MWh)"]}
+                  </p>
                 </div>
               );
             })}
